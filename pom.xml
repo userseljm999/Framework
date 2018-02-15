@@ -1,0 +1,256 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  
+  <groupId>com.chtr.tmoauto</groupId>
+  <artifactId>Framework</artifactId>
+  <version>2.0</version>
+  
+  <properties>
+    <!-- Java compiler settings -->
+    <compiler.version>1.8</compiler.version>
+    <compiler.encoding>UTF-8</compiler.encoding>
+    <compiler.optimize>false</compiler.optimize>
+    
+    <!-- don't use the platform encoding when building, set to UTF-8 -->
+    <project.build.sourceEncoding>${compiler.encoding}</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+    
+    <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+    <!-- <maven.build.timestamp.format>yyyyMMdd hhMM</maven.build.timestamp.format>  //-->
+    <maven-surefire.version>2.18.1</maven-surefire.version>
+    <slf4j.version>1.8</slf4j.version>
+    <maven.javadoc.mode.online>false</maven.javadoc.mode.online>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.javadoc.maxmemory>1024m</maven.javadoc.maxmemory>
+  </properties>
+  
+  <distributionManagement>
+    <repository>
+      <id>central</id>
+      <name>KSTLINTCD231HK6-releases</name>
+      <url>http://kstlintcd231hk6.corp.chartercom.com:8081/artifactory/libs-release-local</url>
+    </repository>
+  </distributionManagement>
+  
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <finalName>${project.artifactId}-1.0</finalName>
+    
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.scm</groupId>
+        <artifactId>maven-scm-manager-plexus</artifactId>
+        <version>1.5</version>
+      </extension>
+      
+      <extension>
+        <groupId>org.apache.maven.scm</groupId>
+        <artifactId>maven-scm-provider-svnexe</artifactId>
+        <version>1.5</version>
+      </extension>
+    </extensions>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.5.1</version>
+        
+        <executions>
+          <execution>
+            <id>unpack-dependencies</id>
+            <phase>prepare-package</phase>
+            
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            
+            <configuration>
+              <outputDirectory>${project.build.directory}/classes/</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+              
+              <exclude>**/META-INF/*</exclude>
+              <exclude>**/META-INF/*.SF</exclude>
+              <exclude>**/META-INF/*.DSA</exclude>
+              <exclude>**/META-INF/*.RSA</exclude>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+        
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>twc.CommonTestingPlatform.SoapUIUnifyingJUnit</mainClass>
+              <mainClass>twc.test</mainClass>
+              <classpathPrefix>lib/</classpathPrefix>
+            </manifest>
+          </archive>
+          
+          <excludes>
+            <exclude>**/META-INF/*.SF</exclude>
+            <exclude>**/META-INF/*.DSA</exclude>
+            <exclude>**/META-INF/*.RSA</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <testSource>1.8</testSource>
+          <testTarget>1.8</testTarget>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <configuration>
+          <verbose>true</verbose>
+          <fork>true</fork>
+          <compilerVersion>1.8</compilerVersion>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>${compiler.encoding}</encoding>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>net.sourceforge.jexcelapi</groupId>
+      <artifactId>jxl</artifactId>
+      <version>2.6.12</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>2.50.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.12</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.11</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.10</version>
+      <scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.10</version>
+    </dependency>
+    
+	<dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.10</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.mercury.qualitycenter</groupId>
+      <artifactId>otaclient</artifactId>
+      <version>9.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.mercury.qualitycenter</groupId>
+      <artifactId>com4j</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.8</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20090211</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>ooxml-schemas</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-excelant</artifactId>
+      <version>3.11</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml-schemas</artifactId>
+      <version>3.11</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-scratchpad</artifactId>
+      <version>3.11</version>
+    </dependency>
+    
+    <dependency>
+		<groupId>com.jcraft</groupId>
+		<artifactId>jsch</artifactId>
+		<version>0.1.54</version>
+	</dependency>
+		
+  </dependencies>
+
+</project>
